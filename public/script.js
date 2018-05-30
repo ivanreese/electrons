@@ -136,7 +136,7 @@
     surface.context.fillStyle = "white";
     surface.context.fillRect(0, 0, width, height);
     imageData = surface.context.getImageData(0, 0, width, height);
-    nParticles = 8;
+    nParticles = 20;
     charge = 1;
     if (particles.length !== 0) {
       return;
@@ -147,7 +147,7 @@
         y: Math.random() * height,
         vx: 0,
         vy: 0,
-        charge: charge = charge * -1
+        charge: Math.random() >= 0.5 ? 1 : -1
       });
     }
     return null;
@@ -164,8 +164,8 @@
         }
         dx = pair.x - particle.x;
         dy = pair.y - particle.y;
-        dist = .1 + Math.sqrt(dx * dx + dy * dy);
-        strength = width / 100 / dist;
+        dist = .1 + Math.sqrt(Math.sqrt(dx * dx + dy * dy));
+        strength = width / 200 / dist;
         if (particle.charge === pair.charge) {
           strength *= -1;
         }
@@ -213,13 +213,13 @@
         dx = x - particle.x;
         dy = y - particle.y;
         dSquared = Math.sqrt(dx * dx + dy * dy);
-        charge += width / 20 * particle.charge / dSquared;
+        charge += width / 60 * particle.charge / dSquared;
       }
       if (charge !== lastCharge) {
         charge === lastCharge;
         absCharge = Math.abs(charge);
         chargeSign = absCharge / charge;
-        val = chargeSign * Math.pow(absCharge, 1);
+        val = chargeSign * Math.pow(absCharge, .9);
         l = Math.max(0, Math.min(255, (val + 1) * 127));
         color = chromaBytes[l | 0];
       }

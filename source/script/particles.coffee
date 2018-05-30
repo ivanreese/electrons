@@ -23,7 +23,7 @@ surfaces.particles.resize = (surface)->
   surface.context.fillRect 0, 0, width, height
 
   imageData = surface.context.getImageData 0, 0, width, height
-  nParticles = 8
+  nParticles = 20
   charge = 1
   return unless particles.length is 0
   for i in [0..nParticles]
@@ -32,7 +32,7 @@ surfaces.particles.resize = (surface)->
       y: Math.random() * height
       vx: 0
       vy: 0
-      charge: charge = charge * -1
+      charge: if Math.random() >= 0.5 then 1 else -1
   null
 
 
@@ -41,8 +41,8 @@ surfaces.particles.simulate = (ctx, t)->
     for pair, j in particles when j > i
       dx = pair.x - particle.x
       dy = pair.y - particle.y
-      dist = .1 + Math.sqrt dx*dx + dy*dy
-      strength = width/100 / dist
+      dist = .1 + Math.sqrt Math.sqrt dx*dx + dy*dy
+      strength = width/200 / dist
       strength *= -1 if particle.charge is pair.charge
       angle = Math.atan2 dy, dx
       particle.vx += Math.cos(angle) * strength
@@ -76,13 +76,13 @@ surfaces.particles.render = (ctx, t)->
       dx = x - particle.x
       dy = y - particle.y
       dSquared = Math.sqrt dx*dx + dy*dy
-      charge += width/20 * particle.charge / dSquared
+      charge += width/60 * particle.charge / dSquared
 
     if charge isnt lastCharge
       charge is lastCharge
       absCharge = Math.abs charge
       chargeSign = absCharge/charge
-      val = chargeSign * Math.pow absCharge, 1
+      val = chargeSign * Math.pow absCharge, .9
       l = Math.max 0, Math.min 255, (val + 1) * 127
       color = chromaBytes[l|0]
 
