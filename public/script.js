@@ -200,14 +200,14 @@
   };
 
   surfaces.particles.render = function(ctx, t) {
-    var absCharge, charge, chargeSign, color, dSquared, dx, dy, k, l, lastCharge, len, particle, pixelByte, val, x, y;
-    pixelByte = 0;
+    var absCharge, charge, chargeSign, color, dSquared, dx, dy, k, l, lastCharge, len, particle, pixelStart, val, x, y;
+    pixelStart = 0;
     lastCharge = null;
     color = null;
-    while (pixelByte < imageData.data.length) {
+    while (pixelStart < imageData.data.length) {
       charge = 0;
-      x = pixelByte / 4 % width | 0;
-      y = pixelByte / 4 / width | 0;
+      x = pixelStart / 4 % width | 0;
+      y = pixelStart / 4 / width | 0;
       for (k = 0, len = particles.length; k < len; k++) {
         particle = particles[k];
         dx = x - particle.x;
@@ -223,10 +223,10 @@
         l = Math.max(0, Math.min(255, (val + 1) * 127));
         color = chromaBytes[l | 0];
       }
-      imageData.data[pixelByte] = color[0];
-      imageData.data[pixelByte + 1] = color[1];
-      imageData.data[pixelByte + 2] = color[2];
-      pixelByte += 4;
+      imageData.data[pixelStart] = color[0];
+      imageData.data[pixelStart + 1] = color[1];
+      imageData.data[pixelStart + 2] = color[2];
+      pixelStart += 4;
     }
     ctx.putImageData(imageData, 0, 0);
     return true;
