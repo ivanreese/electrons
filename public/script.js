@@ -67,7 +67,7 @@
 
   resize = function() {
     var name, surface;
-    zoom = 1 + (container.offsetHeight * container.offsetWidth) / (500 * 500) | 0;
+    zoom = Math.max(2, 1 + (container.offsetHeight * container.offsetWidth) / (500 * 500) | 0);
     width = container.offsetWidth / zoom | 0;
     height = container.offsetHeight / zoom | 0;
     for (name in surfaces) {
