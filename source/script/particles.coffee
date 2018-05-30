@@ -6,6 +6,9 @@ white = [255, 255, 255]
 window.addEventListener "click", ()->
   particles[0].charge *= -1
 
+window.addEventListener "touchstart", ()->
+  particles[0].charge *= -1
+
 
 surfaces.particles.move = ()->
   particle = particles[0]

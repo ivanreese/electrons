@@ -120,6 +120,10 @@
     return particles[0].charge *= -1;
   });
 
+  window.addEventListener("touchstart", function() {
+    return particles[0].charge *= -1;
+  });
+
   surfaces.particles.move = function() {
     var particle;
     particle = particles[0];
